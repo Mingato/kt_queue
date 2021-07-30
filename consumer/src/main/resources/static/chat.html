@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatJS - FrontEnd Magazine - DevMedia</title>
+    <link rel="stylesheet" type="text/css" href="chat.css">
+</head>
+<body>
+    <input type="text" id="texto_name" name="texto_name" />
+    <div id="historico_mensagens" style="overflow-y:scroll"></div>
+
+    <form id="chat">
+        <input type="text" id="texto_mensagem" name="texto_mensagem" />
+        <input type="submit" value="Enviar mensagem!" />
+    </form>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="components/sockjs.min.js"></script>
+    <script src="components/stomp.js"></script>
+
+    <script type="text/javascript">
+        var reconnect = function() {
+            window.setTimeout( function iniciar(){ initSockets(); }, 1000 );
+        };
+
+        var notify = function(message) {
+            var msgJson = JSON.parse(message.body);
+
+            console.log('Novas mensgem', msgJson)
+
+            var mensagem_formatada = $("<p />").text(msgJson.from + ": " + msgJson.text);
+            $("#historico_mensagens").append(mensagem_formatada);
+        }
+
+        var initSockets = function() {
+            console.log('STOMP: INITI SOCKETS');
+            socket={};
+
+            socket.client = new SockJS("/messages");
+            socket.stomp = Stomp.over(socket.client);//socket.client
+            socket.stomp.connect({}, function() {
+                socket.stomp.subscribe("/queue/chat", notify);
+            });
+
+            socket.client.onclose = reconnect;
+        };
+
+        initSockets();
+
+        $("form#chat").submit(function(e){
+            e.preventDefault();
+            var settings = {
+                "url": "http://localhost:8080/message",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({"text":$(this).find("#texto_mensagem").val(),"from":$("#texto_name").val()}),
+            };
+            console.log("Sendding", JSON.stringify({"text":$(this).find("#texto_mensagem").val(),"from":"Gunter"}))
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                $("#texto_mensagem").val('');
+            });
+
+         });
+
+        var findAllMessages = function(){
+            var settings = {
+                "url": "/messages",
+                "method": "GET",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+
+                for(index in response){
+                    var msgJson = response[index];
+                    var mensagem_formatada = $("<p />").text(msgJson.from + ": " + msgJson.text);
+                    $("#historico_mensagens").append(mensagem_formatada);
+                }
+            });
+
+        }
+
+        findAllMessages();
+    </script>
+</body>
+</html>

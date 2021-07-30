@@ -1,0 +1,22 @@
+
+https://www.rabbitmq.com/tutorials/tutorial-one-java.html
+
+mostrar banco de dados no campass
+	mongodb://127.0.0.1:27017
+mostrar o visual do rabbitmq
+	http://localhost:15672/#/
+
+Tarefas
+
+Event Sourcing
+	https://coderef.com.br/cqrs-e-event-sourcing-com-axon-framework-e-spring-boot-7bd83093782d
+	
+disponibilizar o domain para acesso externo 
+
+melhorar o chat - conversas (interface com o usuário)
+
+adicionar authenticação (login)
+
+adicionar sso
+
+

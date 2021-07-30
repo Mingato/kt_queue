@@ -1,0 +1,14 @@
+
+
+server:
+  port: 8082
+
+
+
+axon:
+  amqp:
+    exchange: postagemExchange
+  eventhandling:
+    processors:
+      amqpEvents:
+        source: complaintEventsMethod

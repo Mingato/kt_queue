@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+rabbitmq:
+  exchange: topic
+  queueName: messages
+  routingkey: "path"
+
+spring:
+  rabbitmq:
+    addresses: localhost:5672
+
+axon:
+  amqp:
+    exchange: topic

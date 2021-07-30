@@ -1,0 +1,57 @@
+
+spring:
+  data:
+    mongodb:
+      database: consumer
+      port: 27017
+      host: 127.0.0.1
+      authentication-database: admin
+
+  rabbitmq:
+    addresses: localhost:5672
+
+
+  mvc:
+    converters:
+      preferred-json-mapper: gson
+
+  oauth2:
+    client:
+      clientId: d0077777268be884d998
+      clientSecret: 9a8033d4d7faf8bb46c0da037416ec284e011a9d
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      user-info-uri: https://api.github.com/user
+      prefer-token-info: false
+
+  cloud:
+    stream:
+      bindings:
+        notificationEventSupplier-out-0:
+          destination: notification-events
+server:
+  port: 8081
+
+rabbitmq:
+  exchange: postagemExchange
+  queueName: messages
+  routingkey: "foo.bar.#"
+
+axoniq:
+  axonserver:
+    event:
+      storage=: /events
+
+
+axon:
+  #amqp:
+  #  exchange: postagemExchange
+
+  #axonserver:
+  #  servers: localhost:8024
+
+#callback url: http://localhost:8081/login/oauth2/code/github
+#Client ID: Iv1.011db27538c717f2
+#Client secret: 34677a437419c8b8bc25f3822fc47aed1abad10b
