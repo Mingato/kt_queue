@@ -42,7 +42,6 @@ public class MessageAggregate {
                                     .and("userType", "dev");
 
         AggregateLifecycle.apply(event, metaData);
-        AggregateLifecycle.apply(event, metaData);
     }
 
     @EventSourcingHandler
