@@ -44,11 +44,11 @@ public class MessageController {
 
         eventStore.readEvents(aggregateId);
 
-        eventStore.readEvents(aggregateId).asStream().forEach(i ->{
+        /*eventStore.readEvents(aggregateId).asStream().forEach(i ->{
             System.out.println(i);
             i.getPayload();
             i.getMetaData();
-        });
+        });*/
 
         return ResponseEntity.ok().body(eventStore.readEvents(aggregateId)
                 .asStream()

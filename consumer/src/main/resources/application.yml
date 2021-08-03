@@ -46,11 +46,10 @@ axoniq:
 
 
 axon:
-  #amqp:
-  #  exchange: postagemExchange
-
-  #axonserver:
-  #  servers: localhost:8024
+  amqp:
+    exchange: postagemExchange
+  axonserver:
+    servers: localhost
 
 #callback url: http://localhost:8081/login/oauth2/code/github
 #Client ID: Iv1.011db27538c717f2
