@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="chat.css">
 </head>
 <body>
-    <input type="text" id="texto_name" name="texto_name" />
+    <div id="texto_name" name="texto_name" style="color: antiquewhite; font-size: x-large;"></div>
     <div id="historico_mensagens" style="overflow-y:scroll"></div>
 
     <form id="chat">
@@ -18,6 +18,22 @@
     <script src="components/stomp.js"></script>
 
     <script type="text/javascript">
+    var user = {}
+
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    fetch("http://localhost:8081/userinfos", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        user = JSON.parse(result)
+        console.log(user)
+        $('#texto_name').html('Bem-vindo: ' + user.principal.username)
+      })
+      .catch(error => console.log('error', error));
+
         var reconnect = function() {
             window.setTimeout( function iniciar(){ initSockets(); }, 1000 );
         };
@@ -49,13 +65,13 @@
         $("form#chat").submit(function(e){
             e.preventDefault();
             var settings = {
-                "url": "http://localhost:8080/message",
+                "url": "http://"+location.hostname+":8080/message",
                 "method": "POST",
                 "timeout": 0,
                 "headers": {
                     "Content-Type": "application/json"
                 },
-                "data": JSON.stringify({"text":$(this).find("#texto_mensagem").val(),"from":$("#texto_name").val()}),
+                "data": JSON.stringify({"text":$(this).find("#texto_mensagem").val(),"from":user.principal.username}),
             };
             console.log("Sendding", JSON.stringify({"text":$(this).find("#texto_mensagem").val(),"from":"Gunter"}))
 

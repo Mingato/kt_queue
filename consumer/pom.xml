@@ -85,6 +85,10 @@
 			<artifactId>spring-cloud-starter-security</artifactId>
 		</dependency>-->
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -115,21 +119,6 @@
 			<version>4.4</version>
 		</dependency>
 
-		<!--
-		<dependency>
-			<groupId>org.axonframework</groupId>
-			<artifactId>axon-spring</artifactId>
-			<version>4.4.8</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.axonframework</groupId>
-			<artifactId>axon-spring-boot-autoconfigure</artifactId>
-			<version>4.4.8</version>
-			<scope>compile</scope>
-		</dependency>-->
-
 	</dependencies>
 
 	<dependencyManagement>
@@ -145,6 +134,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>consumer</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
